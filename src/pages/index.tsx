@@ -7,9 +7,9 @@ import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 import { api } from "~/utils/api";
 
 const Home: NextPage = () => {
-  const hello = api.example.hello.useQuery({ text: "from tRPC" });
-
   const user = useUser();
+
+  const { data } = api.example.getAll.useQuery();
 
   return (
     <>
