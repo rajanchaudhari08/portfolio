@@ -6,6 +6,20 @@ import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 import { api } from "~/utils/api";
 
+const CreatePostWizard = () => {
+  const { user } = useUser();
+  if (!user) return null;
+  return (
+    <div className="flex">
+      <img
+        src={user.profileImageUrl}
+        alt="User Profile Image"
+        className="h-16 w-16 rounded-full"
+      />
+    </div>
+  );
+};
+
 const Home: NextPage = () => {
   const user = useUser();
 
@@ -33,6 +47,11 @@ const Home: NextPage = () => {
             {!!user.isSignedIn && (
               <div className="flex justify-center">
                 <SignOutButton />
+              </div>
+            )}
+            {!!user.isSignedIn && (
+              <div className="flex justify-center">
+                <CreatePostWizard />
               </div>
             )}
           </div>
