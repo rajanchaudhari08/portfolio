@@ -10,11 +10,16 @@ const CreatePostWizard = () => {
   const { user } = useUser();
   if (!user) return null;
   return (
-    <div className="flex">
+    <div className="flex w-full gap-3">
       <img
         src={user.profileImageUrl}
         alt="User Profile Image"
         className="h-16 w-16 rounded-full"
+      />
+      <input
+        type="text"
+        placeholder="Typing..."
+        className="grow bg-transparent outline-none"
       />
     </div>
   );
