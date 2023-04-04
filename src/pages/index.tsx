@@ -4,10 +4,13 @@ import Link from "next/link";
 
 import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
-import { api } from "~/utils/api";
+import { api, RouterOutputs } from "~/utils/api";
 
 const CreatePostWizard = () => {
   const { user } = useUser();
+
+  console.log(user?.id);
+
   if (!user) return null;
   return (
     <div className="flex w-full gap-3">
@@ -21,6 +24,28 @@ const CreatePostWizard = () => {
         placeholder="Typing..."
         className="grow bg-transparent outline-none"
       />
+    </div>
+  );
+};
+
+type PostWithUser = RouterOutputs["posts"]["getAll"][number];
+
+const PostView = (properties: PostWithUser) => {
+  const { post, author } = properties;
+  return (
+    <div key={post.id} className="flex gap-3 border-b border-slate-400 p-4">
+      <img
+        src={author.profileImageUrl}
+        alt="User Profile Image"
+        className="h-16 w-16 rounded-full"
+      />
+      <div className="flex flex-col">
+        <div className="flex gap-1 text-slate-300">
+          <span>{`@${author.username}`}</span>
+          <span className="font-thin">{`. 1 hour ago`}</span>
+        </div>
+        <span>{post.content}</span>
+      </div>
     </div>
   );
 };
@@ -62,10 +87,8 @@ const Home: NextPage = () => {
           </div>
           {/* <SignIn path="/sign-in" routing="path" signUpUrl="/sign-up" /> */}
           <div className="flex flex-col">
-            {[...data]?.map((post) => (
-              <div key={post.id} className="border-b border-slate-400 p-8">
-                {post.content}
-              </div>
+            {[...data]?.map((fullPost) => (
+              <PostView key={fullPost.post.id} {...fullPost} />
             ))}
           </div>
         </div>
