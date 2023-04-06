@@ -6,6 +6,9 @@ import { SignIn, SignInButton, SignOutButton, useUser } from "@clerk/nextjs";
 
 import { api, RouterOutputs } from "~/utils/api";
 
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
 const CreatePostWizard = () => {
   const { user } = useUser();
 
@@ -42,7 +45,9 @@ const PostView = (properties: PostWithUser) => {
       <div className="flex flex-col">
         <div className="flex gap-1 text-slate-300">
           <span>{`@${author.username}`}</span>
-          <span className="font-thin">{`. 1 hour ago`}</span>
+          <span className="font-thin">{`. ${dayjs(
+            post.createdAt
+          ).fromNow()}`}</span>
         </div>
         <span>{post.content}</span>
       </div>
