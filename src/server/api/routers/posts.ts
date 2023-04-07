@@ -1,6 +1,10 @@
 import type { User } from "@clerk/nextjs/dist/api";
 import clerkClient from "@clerk/clerk-sdk-node";
-import { createTRPCRouter, publicProcedure } from "~/server/api/trpc";
+
+import {
+  createTRPCRouter,
+  publicProcedure,
+} from "~/server/api/trpc";
 import { TRPCError } from "@trpc/server";
 
 const filterUserForClient = (user: User) => {
